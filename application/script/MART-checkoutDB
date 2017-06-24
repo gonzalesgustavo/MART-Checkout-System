@@ -1,0 +1,161 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:8889
+-- Generation Time: Jun 24, 2017 at 08:17 PM
+-- Server version: 5.6.33
+-- PHP Version: 7.0.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `mart_checkout`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment checked out`
+--
+
+CREATE TABLE `equipment checked out` (
+  `barcode of item` int(11) NOT NULL,
+  `item name` varchar(255) NOT NULL,
+  `student id` int(11) NOT NULL,
+  `student name` varchar(255) NOT NULL,
+  `student phone` bigint(11) NOT NULL,
+  `student email` varchar(255) NOT NULL,
+  `date issued` date NOT NULL,
+  `date due` date NOT NULL,
+  `notes` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `equipment reservation`
+--
+
+CREATE TABLE `equipment reservation` (
+  `barcode of item` int(11) NOT NULL,
+  `item name` varchar(255) NOT NULL,
+  `student id` int(11) NOT NULL COMMENT 'barcode from id',
+  `student name` varchar(255) NOT NULL,
+  `student phone` bigint(11) NOT NULL,
+  `student email` varchar(255) NOT NULL,
+  `date needed` date NOT NULL,
+  `date due` date NOT NULL,
+  `notes` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `equipment reservation`
+--
+
+INSERT INTO `equipment reservation` (`barcode of item`, `item name`, `student id`, `student name`, `student phone`, `student email`, `date needed`, `date due`, `notes`) VALUES
+(34567, 'LED lights', 3456789, 'anna', 9588451234, 'abcdefg@yahoo.com', '2017-06-24', '2017-06-26', ''),
+(3468900, 'video camera', 3456789, 'anna', 9588451234, 'abcdefg@yahoo.com', '2017-06-24', '2017-06-26', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products`
+--
+
+CREATE TABLE `products` (
+  `barcode` int(11) NOT NULL,
+  `item name` varchar(500) NOT NULL,
+  `item description` varchar(500) NOT NULL,
+  `clearance level` int(5) NOT NULL,
+  `notes` varchar(5000) NOT NULL,
+  `account purchased from` varchar(500) NOT NULL,
+  `status of product` set('0 = out of commission','1 = available for check out','2 = reserved','3 = available after class','4 = out for repair') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `student id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` bigint(11) NOT NULL,
+  `clearance level` int(5) NOT NULL,
+  `amount owed` decimal(10,0) NOT NULL DEFAULT '0',
+  `active` enum('0 = false = not active','1 = true = active') NOT NULL,
+  `eligible` enum('0 = false = not eligible','1 = true = eligible') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user barcode` int(11) NOT NULL,
+  `name` int(11) NOT NULL,
+  `admin privileges` enum('0 = DBA','1 = Supervisor','2 = Employee') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `equipment checked out`
+--
+ALTER TABLE `equipment checked out`
+  ADD PRIMARY KEY (`barcode of item`);
+
+--
+-- Indexes for table `equipment reservation`
+--
+ALTER TABLE `equipment reservation`
+  ADD PRIMARY KEY (`barcode of item`);
+
+--
+-- Indexes for table `products`
+--
+ALTER TABLE `products`
+  ADD PRIMARY KEY (`barcode`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student id`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `equipment checked out`
+--
+ALTER TABLE `equipment checked out`
+  ADD CONSTRAINT `equipment checked out_ibfk_1` FOREIGN KEY (`barcode of item`) REFERENCES `products` (`barcode`);
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`barcode`) REFERENCES `equipment reservation` (`barcode of item`);
+
+DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `reservations` ON SCHEDULE EVERY 1 DAY STARTS '2017-06-23 08:00:00' ON COMPLETION PRESERVE ENABLE DO SELECT * FROM `equipment reservation` WHERE 'date needed' = CURRENT_DATE()$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `release` ON SCHEDULE EVERY 1 DAY STARTS '2017-06-26 16:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'release products that are reserved and are not picked up by 4' DO UPDATE `equipment reservation`
+SET `status of product` = 1$$
+
+CREATE DEFINER=`root`@`localhost` EVENT `yearly` ON SCHEDULE EVERY 1 YEAR STARTS '2017-06-30 08:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'yearly report of all check outs' DO SELECT * from `equipment checked out`$$
+
+DELIMITER ;

@@ -1,12 +1,11 @@
 -- phpMyAdmin SQL Dump
 -- version 4.6.4
 -- https://www.phpmyadmin.net/
--- 
+--
 -- Host: localhost:8889
--- Generation Time: Jun 24, 2017 at 08:17 PM
+-- Generation Time: Jul 17, 2017 at 4:53 PM
 -- Server version: 5.6.33
 -- PHP Version: 7.0.12
---AnnaLouise Martinez
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -15,6 +14,59 @@ SET time_zone = "+00:00";
 -- Database: `mart_checkout`
 --
 
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `reservations` ()  READS SQL DATA
+SELECT `equipment_reservation`.*, `students`.`name`, `students`.`email`, `students`.`phone` FROM `equipment_reservation` JOIN  `students` ON `equipment_reservation`.`student id` = `students`.`student id`
+WHERE `equipment_reservation`.`date needed` = CURRENT_DATE$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `approval needed`
+--
+
+CREATE TABLE `approval needed` (
+  `barcode of item` varchar(255) NOT NULL,
+  `student id` int(11) NOT NULL,
+  `date issued` date NOT NULL,
+  `date due` date NOT NULL,
+  `notes` varchar(5000) NOT NULL,
+  `approved` tinyint(1) NOT NULL DEFAULT '0' COMMENT '0 = false = not approved, 1 = true = approved'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clearance_level_key`
+--
+
+CREATE TABLE `clearance_level_key` (
+  `id` int(11) NOT NULL,
+  `level` varchar(255) NOT NULL,
+  `barcode` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `class` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `clearance_level_key`
+--
+
+INSERT INTO `clearance_level_key` (`id`, `level`, `barcode`, `description`, `class`) VALUES
+(1, 'Video 1', 'POINTSHOOT1', '', 'MART 121, MART 233'),
+(2, 'Video 2', 'PAN801, WIRELESS AUDIO KIT 1, CLK 1, HULK 1, TLK 1, LED LP 1, ICE LIGHTS 1, CELL PHONE TRIPOD 1, T1I 1, POINT SHOOT 1', '', 'MART 121, MART 221, MART 223'),
+(3, 'Photography 1', 'T1I 1, T3 1, XSI 1, PHOTO TRIPOD 1', '', 'MART 243'),
+(4, 'photography 2', 'T1I 1, T3 1, XSI 1, PHOTO TRIPOD 1', '', 'MART 317, MART 517'),
+(5, 'SSD LAPTOP ', 'SDLAP1', 'SSD Laptop #1', ''),
+(6, '', 'GP01', 'Go Pro #1', 'MART 436/MART 536'),
+(7, '', 'GP02', 'Go Pro #2', ''),
+(8, '', 'CMWT1', 'Camera with Tripod #1', 'MART 315/MART 517');
+
 -- --------------------------------------------------------
 
 --
@@ -22,12 +74,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `equipment checked out` (
-  `barcode of item` int(11) NOT NULL,
-  `item name` varchar(255) NOT NULL,
+  `barcode of item` varchar(255) NOT NULL,
   `student id` int(11) NOT NULL,
-  `student name` varchar(255) NOT NULL,
-  `student phone` bigint(11) NOT NULL,
-  `student email` varchar(255) NOT NULL,
   `date issued` date NOT NULL,
   `date due` date NOT NULL,
   `notes` varchar(5000) NOT NULL
@@ -36,28 +84,26 @@ CREATE TABLE `equipment checked out` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `equipment reservation`
+-- Table structure for table `equipment_reservation`
 --
 
-CREATE TABLE `equipment reservation` (
-  `barcode of item` int(11) NOT NULL,
-  `item name` varchar(255) NOT NULL,
+CREATE TABLE `equipment_reservation` (
+  `barcode of item` varchar(255) NOT NULL,
   `student id` int(11) NOT NULL COMMENT 'barcode from id',
-  `student name` varchar(255) NOT NULL,
-  `student phone` bigint(11) NOT NULL,
-  `student email` varchar(255) NOT NULL,
   `date needed` date NOT NULL,
   `date due` date NOT NULL,
   `notes` varchar(5000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `equipment reservation`
+-- Dumping data for table `equipment_reservation`
 --
 
-INSERT INTO `equipment reservation` (`barcode of item`, `item name`, `student id`, `student name`, `student phone`, `student email`, `date needed`, `date due`, `notes`) VALUES
-(34567, 'LED lights', 3456789, 'anna', 9588451234, 'abcdefg@yahoo.com', '2017-06-24', '2017-06-26', ''),
-(3468900, 'video camera', 3456789, 'anna', 9588451234, 'abcdefg@yahoo.com', '2017-06-24', '2017-06-26', '');
+INSERT INTO `equipment_reservation` (`barcode of item`, `student id`, `date needed`, `date due`, `notes`) VALUES
+('123470', 23467, '2017-07-18', '2017-07-19', ''),
+('34567', 3456789, '2017-07-18', '2017-07-19', ''),
+('3468900', 3456789, '2017-07-18', '2017-07-19', ''),
+('65432', 23467, '2017-07-18', '2017-07-19', '');
 
 -- --------------------------------------------------------
 
@@ -66,14 +112,27 @@ INSERT INTO `equipment reservation` (`barcode of item`, `item name`, `student id
 --
 
 CREATE TABLE `products` (
-  `barcode` int(11) NOT NULL,
+  `barcode` varchar(255) NOT NULL,
   `item name` varchar(500) NOT NULL,
   `item description` varchar(500) NOT NULL,
-  `clearance level` int(5) NOT NULL,
+  `clearance level` varchar(20) NOT NULL,
+  `class_name` varchar(255) NOT NULL,
   `notes` varchar(5000) NOT NULL,
   `account purchased from` varchar(500) NOT NULL,
   `status of product` set('0 = out of commission','1 = available for check out','2 = reserved','3 = available after class','4 = out for repair') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`barcode`, `item name`, `item description`, `clearance level`, `class_name`, `notes`, `account purchased from`, `status of product`) VALUES
+('CMWT1', 'CAMERA', 'CAMERA WITH TRIPOD #1', '', '', '', '', '1 = available for check out'),
+('GOP02', 'GO PRO#2', 'GO PRO CAMERA', '', '', '', '', '1 = available for check out'),
+('GP01', 'GO PRO#1', 'GO PRO CAMERA', '', '', '', '', '1 = available for check out'),
+('POINT SHOOT 1', 'POINT AND SHOOT', 'PHOTO CAMERA POINT AND SHOOT ', 'VIDEO 1 ', '', '', '', '1 = available for check out'),
+('POINT SHOOT 2', 'POINT AND SHOOT', 'PHOTO CAMERA POINT AND SHOOT ', 'VIDEO 1 ', '', '', '', '1 = available for check out'),
+('SDLAP1', 'SSD LAPTOP #1', 'SSD LAPTOP', 'SSDLAPTOP', '', '', '', '1 = available for check out');
 
 -- --------------------------------------------------------
 
@@ -82,7 +141,7 @@ CREATE TABLE `products` (
 --
 
 CREATE TABLE `students` (
-  `student id` int(11) NOT NULL,
+  `student id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `phone` bigint(11) NOT NULL,
@@ -91,6 +150,14 @@ CREATE TABLE `students` (
   `active` enum('0 = false = not active','1 = true = active') NOT NULL,
   `eligible` enum('0 = false = not eligible','1 = true = eligible') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`student id`, `name`, `email`, `phone`, `clearance level`, `amount owed`, `active`, `eligible`) VALUES
+('23467', 'anna', 'anlmn@yahoo.com', 7658764567, 1, '0', '1 = true = active', '1 = true = eligible'),
+('3456789', 'jane', 'jane@yahoo.com', 4536751298, 2, '0', '1 = true = active', '1 = true = eligible');
 
 -- --------------------------------------------------------
 
@@ -109,15 +176,27 @@ CREATE TABLE `users` (
 --
 
 --
+-- Indexes for table `approval needed`
+--
+ALTER TABLE `approval needed`
+  ADD PRIMARY KEY (`barcode of item`);
+
+--
+-- Indexes for table `clearance_level_key`
+--
+ALTER TABLE `clearance_level_key`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `equipment checked out`
 --
 ALTER TABLE `equipment checked out`
   ADD PRIMARY KEY (`barcode of item`);
 
 --
--- Indexes for table `equipment reservation`
+-- Indexes for table `equipment_reservation`
 --
-ALTER TABLE `equipment reservation`
+ALTER TABLE `equipment_reservation`
   ADD PRIMARY KEY (`barcode of item`);
 
 --
@@ -133,26 +212,19 @@ ALTER TABLE `students`
   ADD PRIMARY KEY (`student id`);
 
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- Constraints for table `equipment checked out`
+-- AUTO_INCREMENT for table `clearance_level_key`
 --
-ALTER TABLE `equipment checked out`
-  ADD CONSTRAINT `equipment checked out_ibfk_1` FOREIGN KEY (`barcode of item`) REFERENCES `products` (`barcode`);
-
---
--- Constraints for table `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`barcode`) REFERENCES `equipment reservation` (`barcode of item`);
-
+ALTER TABLE `clearance_level_key`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 DELIMITER $$
 --
 -- Events
 --
-CREATE DEFINER=`root`@`localhost` EVENT `reservations` ON SCHEDULE EVERY 1 DAY STARTS '2017-06-23 08:00:00' ON COMPLETION PRESERVE ENABLE DO SELECT * FROM `equipment reservation` WHERE 'date needed' = CURRENT_DATE()$$
+CREATE DEFINER=`root`@`localhost` EVENT `reservations` ON SCHEDULE EVERY 1 DAY STARTS '2017-07-12 08:00:00' ON COMPLETION PRESERVE ENABLE DO CALL reservations()$$
 
 CREATE DEFINER=`root`@`localhost` EVENT `release` ON SCHEDULE EVERY 1 DAY STARTS '2017-06-26 16:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'release products that are reserved and are not picked up by 4' DO UPDATE `equipment reservation`
 SET `status of product` = 1$$

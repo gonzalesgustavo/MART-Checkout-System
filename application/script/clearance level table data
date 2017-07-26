@@ -1,0 +1,73 @@
+-- phpMyAdmin SQL Dump
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:8889
+-- Generation Time: Jul 26, 2017 at 02:42 AM
+-- Server version: 5.6.33
+-- PHP Version: 7.0.12
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `mart_checkout`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clearance_level_key`
+--
+
+CREATE TABLE `clearance_level_key` (
+  `level id` int(11) NOT NULL,
+  `level` varchar(255) NOT NULL,
+  `barcode` varchar(255) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `class` varchar(5000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `clearance_level_key`
+--
+
+INSERT INTO `clearance_level_key` (`level id`, `level`, `barcode`, `description`, `class`) VALUES
+(1, 'Video 1', '', '', 'MART 121, MART 233'),
+(2, 'Video 2', '', '', 'MART 221'),
+(3, 'Photography 1', '', '', 'MART 243'),
+(4, 'Photography 2', 'CMWT1', 'Camera with Tripod #1', 'MART 317, MART 517'),
+(5, 'SSD Laptop', 'SDLAP1', 'SSD Laptop #1', ''),
+(6, 'Video 3', '', '', 'MART 322/MART 522'),
+(7, 'Video 5', '', '', 'MART 323, MART 523, MART 362, MART 562, MART 413, MART 513, MART 415, MART 515, 
+MART 461, MART 561, MART 464, MART 564, MART 470, MART 570, MART 477, MART 577, MART 495, MART 595, MART 496, MART 596'),
+(8, 'Audio 1', '', '', 'MART 366/MART 566'),
+(9, 'Photography 3', '', '', 'MART 367/ MART 567'),
+(10, 'Video 4', 'GP01, GP02', 'Go Pro #1, Go Pro #2', 'MART 436/ MART 536'),
+(11, 'Photography 4', '', '', 'MART 447, MART 547, MART 460, MART 560'),
+(12, 'Photography 5', '', '', 'MART 449/MART 549'),
+(13, 'Audio 2', '', '', 'MART 457/ MAART 557'),
+(14, 'SSD Android', '', '', 'SSD 425'),
+(15, 'SSD IOS', '', '', 'SSD 420'),
+(16, 'SSD AAA', '', '', 'SSD 341'),
+(17, 'SSD Interfaces', '', '', 'SSD 370');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `clearance_level_key`
+--
+ALTER TABLE `clearance_level_key`
+  ADD PRIMARY KEY (`level id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `clearance_level_key`
+--
+ALTER TABLE `clearance_level_key`
+  MODIFY `level id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;

@@ -56,10 +56,11 @@ function populateList() {
 }
 
 function viewList() {
-
     console.log("View List Mode...");
     setShowElement("#addItemDiv", false);
     setShowList(true);
+
+
 
 }
 
@@ -141,7 +142,7 @@ function addSubmitForm() {
             url: "add_item.php",
             type: "POST",
             data: str,
-            success: (function (data) {
+            success: (function () {
                 alert("Item ADDED to database.");
                 document.getElementById("addItemForm").reset();
             })

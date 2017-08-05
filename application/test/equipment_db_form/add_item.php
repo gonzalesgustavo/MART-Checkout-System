@@ -26,7 +26,7 @@ $item_desc = $_POST['iDescription'];
 $item_clrLvl = $_POST['clearance'];
 $item_notes = $_POST['notes'];
 $item_APF = $_POST['accPurchFrom'];
-$item_status = (int)$_POST['iStatus'];
+$item_status = $_POST['iStatus'];
 
 //test the connection
 if (mysqli_connect_errno()) {
@@ -34,6 +34,7 @@ if (mysqli_connect_errno()) {
     exit();
 } else {
     echo "Connected to " . $db_name . "<br>";
+
 
     //adds the item to the databse using the input fields
     $query = "INSERT INTO `products`(`barcode`, `item name`, `item description`, `clearance level`, `notes`, `account purchased from`, `status of product`) VALUES ('$item_sku', '$item_name', '$item_desc', '$item_clrLvl', '$item_notes', '$item_APF', '$item_status')";

@@ -145,9 +145,20 @@ function addSubmitForm() {
             success: (function () {
                 alert("Item ADDED to database.");
                 document.getElementById("addItemForm").reset();
+                addItemToDropdown(a, b);  
             })
         });
     }
+}
+
+function addItemToDropdown(a,b) {
+    //variable a is product sku 
+    //variable b is name of product
+    var el = document.createElement("option");
+    el.textContent = a + " (" + b + ")";
+    el.value = b;
+
+    select.appendChild(el);
 }
 
 function editConfirm() {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jul 17, 2017 at 4:53 PM
+-- Generation Time: Aug 29, 2017 at 10:21 PM
 -- Server version: 5.6.33
 -- PHP Version: 7.0.12
 
@@ -13,6 +13,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `mart_checkout`
 --
+CREATE DATABASE IF NOT EXISTS `mart_checkout` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `mart_checkout`;
 
 DELIMITER $$
 --
@@ -46,7 +48,7 @@ CREATE TABLE `approval needed` (
 --
 
 CREATE TABLE `clearance_level_key` (
-  `id` int(11) NOT NULL,
+  `level id` int(11) NOT NULL,
   `level` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `description` varchar(500) NOT NULL,
@@ -57,15 +59,24 @@ CREATE TABLE `clearance_level_key` (
 -- Dumping data for table `clearance_level_key`
 --
 
-INSERT INTO `clearance_level_key` (`id`, `level`, `barcode`, `description`, `class`) VALUES
-(1, 'Video 1', 'POINTSHOOT1', '', 'MART 121, MART 233'),
-(2, 'Video 2', 'PAN801, WIRELESS AUDIO KIT 1, CLK 1, HULK 1, TLK 1, LED LP 1, ICE LIGHTS 1, CELL PHONE TRIPOD 1, T1I 1, POINT SHOOT 1', '', 'MART 121, MART 221, MART 223'),
-(3, 'Photography 1', 'T1I 1, T3 1, XSI 1, PHOTO TRIPOD 1', '', 'MART 243'),
-(4, 'photography 2', 'T1I 1, T3 1, XSI 1, PHOTO TRIPOD 1', '', 'MART 317, MART 517'),
-(5, 'SSD LAPTOP ', 'SDLAP1', 'SSD Laptop #1', ''),
-(6, '', 'GP01', 'Go Pro #1', 'MART 436/MART 536'),
-(7, '', 'GP02', 'Go Pro #2', ''),
-(8, '', 'CMWT1', 'Camera with Tripod #1', 'MART 315/MART 517');
+INSERT INTO `clearance_level_key` (`level id`, `level`, `barcode`, `description`, `class`) VALUES
+(1, 'Video 1', '', '', 'MART 121, MART 233'),
+(2, 'Video 2', '', '', 'MART 221'),
+(3, 'Photography 1', '', '', 'MART 243'),
+(4, 'Photography 2', 'CMWT1', 'Camera with Tripod #1', 'MART 317, MART 517'),
+(5, 'SSD Laptop', 'SDLAP1', 'SSD Laptop #1', ''),
+(6, 'Video 3', '', '', 'MART 322/MART 522'),
+(7, 'Video 5', '', '', 'MART 323, MART 523, MART 362, MART 562, MART 413, MART 513, MART 415, MART 515, MART 461, MART 561, MART 464, MART 564, MART 470, MART 570, MART 477, MART 577, MART 495, MART 595, MART 496, MART 596'),
+(8, 'Audio 1', '', '', 'MART 366/MART 566'),
+(9, 'Photography 3', '', '', 'MART 367/ MART 567'),
+(10, 'Video 4', 'GP01, GP02', 'Go Pro #1, Go Pro #2', 'MART 436/ MART 536'),
+(11, 'Photography 4', '', '', 'MART 447, MART 547, MART 460, MART 560'),
+(12, 'Photography 5', '', '', 'MART 449/MART 549'),
+(13, 'Audio 2', '', '', 'MART 457/ MAART 557'),
+(14, 'SSD Android', '', '', 'SSD 425'),
+(15, 'SSD IOS', '', '', 'SSD 420'),
+(16, 'SSD AAA', '', '', 'SSD 341'),
+(17, 'SSD Interfaces', '', '', 'SSD 370');
 
 -- --------------------------------------------------------
 
@@ -80,6 +91,14 @@ CREATE TABLE `equipment checked out` (
   `date due` date NOT NULL,
   `notes` varchar(5000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `equipment checked out`
+--
+
+INSERT INTO `equipment checked out` (`barcode of item`, `student id`, `date issued`, `date due`, `notes`) VALUES
+('CMWT1', 23467, '2017-08-14', '2017-08-15', ''),
+('SSDLAP1', 23467, '2017-08-14', '2017-08-15', '');
 
 -- --------------------------------------------------------
 
@@ -100,10 +119,10 @@ CREATE TABLE `equipment_reservation` (
 --
 
 INSERT INTO `equipment_reservation` (`barcode of item`, `student id`, `date needed`, `date due`, `notes`) VALUES
-('123470', 23467, '2017-07-18', '2017-07-19', ''),
-('34567', 3456789, '2017-07-18', '2017-07-19', ''),
-('3468900', 3456789, '2017-07-18', '2017-07-19', ''),
-('65432', 23467, '2017-07-18', '2017-07-19', '');
+('123470', 23467, '2017-07-28', '2017-07-31', ''),
+('34567', 3456789, '2017-07-28', '2017-07-31', ''),
+('3468900', 3456789, '2017-07-28', '2017-07-31', ''),
+('65432', 23467, '2017-07-28', '2017-07-31', '');
 
 -- --------------------------------------------------------
 
@@ -119,7 +138,7 @@ CREATE TABLE `products` (
   `class_name` varchar(255) NOT NULL,
   `notes` varchar(5000) NOT NULL,
   `account purchased from` varchar(500) NOT NULL,
-  `status of product` set('0 = out of commission','1 = available for check out','2 = reserved','3 = available after class','4 = out for repair') DEFAULT NULL
+  `status of product` enum('out of commission','available for checkout','reserved','available after class','out for repair') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -127,12 +146,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`barcode`, `item name`, `item description`, `clearance level`, `class_name`, `notes`, `account purchased from`, `status of product`) VALUES
-('CMWT1', 'CAMERA', 'CAMERA WITH TRIPOD #1', '', '', '', '', '1 = available for check out'),
-('GOP02', 'GO PRO#2', 'GO PRO CAMERA', '', '', '', '', '1 = available for check out'),
-('GP01', 'GO PRO#1', 'GO PRO CAMERA', '', '', '', '', '1 = available for check out'),
-('POINT SHOOT 1', 'POINT AND SHOOT', 'PHOTO CAMERA POINT AND SHOOT ', 'VIDEO 1 ', '', '', '', '1 = available for check out'),
-('POINT SHOOT 2', 'POINT AND SHOOT', 'PHOTO CAMERA POINT AND SHOOT ', 'VIDEO 1 ', '', '', '', '1 = available for check out'),
-('SDLAP1', 'SSD LAPTOP #1', 'SSD LAPTOP', 'SSDLAPTOP', '', '', '', '1 = available for check out');
+('CMWT1', 'CAMERA', 'CAMERA WITH TRIPOD #1', '', '', '', '', 'available for checkout'),
+('GOP02', 'GO PRO#2', 'GO PRO CAMERA', '', '', '', '', 'available for checkout'),
+('GP01', 'GO PRO#1', 'GO PRO CAMERA', '', '', '', '', 'available for checkout'),
+('POINT SHOOT 1', 'POINT AND SHOOT', 'PHOTO CAMERA POINT AND SHOOT ', 'VIDEO 1 ', '', '', '', 'available for checkout'),
+('POINT SHOOT 2', 'POINT AND SHOOT', 'PHOTO CAMERA POINT AND SHOOT ', 'VIDEO 1 ', '', '', '', 'out of commission'),
+('SDLAP1', 'SSD LAPTOP #1', 'SSD LAPTOP', 'SSDLAPTOP', '', '', '', 'available for checkout');
 
 -- --------------------------------------------------------
 
@@ -185,7 +204,7 @@ ALTER TABLE `approval needed`
 -- Indexes for table `clearance_level_key`
 --
 ALTER TABLE `clearance_level_key`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`level id`);
 
 --
 -- Indexes for table `equipment checked out`
@@ -219,7 +238,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `clearance_level_key`
 --
 ALTER TABLE `clearance_level_key`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `level id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 DELIMITER $$
 --
 -- Events

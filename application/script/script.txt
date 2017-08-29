@@ -1,1 +1,0 @@
-Automation and code generation scripts.

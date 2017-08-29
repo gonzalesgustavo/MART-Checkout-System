@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 29, 2017 at 10:21 PM
+-- Generation Time: Aug 29, 2017 at 10:56 PM
 -- Server version: 5.6.33
 -- PHP Version: 7.0.12
 
@@ -85,6 +85,7 @@ INSERT INTO `clearance_level_key` (`level id`, `level`, `barcode`, `description`
 --
 
 CREATE TABLE `equipment checked out` (
+  `checkout_id` int(11) NOT NULL,
   `barcode of item` varchar(255) NOT NULL,
   `student id` int(11) NOT NULL,
   `date issued` date NOT NULL,
@@ -96,9 +97,9 @@ CREATE TABLE `equipment checked out` (
 -- Dumping data for table `equipment checked out`
 --
 
-INSERT INTO `equipment checked out` (`barcode of item`, `student id`, `date issued`, `date due`, `notes`) VALUES
-('CMWT1', 23467, '2017-08-14', '2017-08-15', ''),
-('SSDLAP1', 23467, '2017-08-14', '2017-08-15', '');
+INSERT INTO `equipment checked out` (`checkout_id`, `barcode of item`, `student id`, `date issued`, `date due`, `notes`) VALUES
+(1, 'CMWT1', 23467, '2017-08-14', '2017-08-15', ''),
+(2, 'SSDLAP1', 23467, '2017-08-14', '2017-08-15', '');
 
 -- --------------------------------------------------------
 
@@ -107,6 +108,7 @@ INSERT INTO `equipment checked out` (`barcode of item`, `student id`, `date issu
 --
 
 CREATE TABLE `equipment_reservation` (
+  `reservation_id` int(11) NOT NULL,
   `barcode of item` varchar(255) NOT NULL,
   `student id` int(11) NOT NULL COMMENT 'barcode from id',
   `date needed` date NOT NULL,
@@ -118,11 +120,11 @@ CREATE TABLE `equipment_reservation` (
 -- Dumping data for table `equipment_reservation`
 --
 
-INSERT INTO `equipment_reservation` (`barcode of item`, `student id`, `date needed`, `date due`, `notes`) VALUES
-('123470', 23467, '2017-07-28', '2017-07-31', ''),
-('34567', 3456789, '2017-07-28', '2017-07-31', ''),
-('3468900', 3456789, '2017-07-28', '2017-07-31', ''),
-('65432', 23467, '2017-07-28', '2017-07-31', '');
+INSERT INTO `equipment_reservation` (`reservation_id`, `barcode of item`, `student id`, `date needed`, `date due`, `notes`) VALUES
+(1, '123470', 23467, '2017-07-28', '2017-07-31', ''),
+(2, '34567', 3456789, '2017-07-28', '2017-07-31', ''),
+(3, '3468900', 3456789, '2017-07-28', '2017-07-31', ''),
+(4, '65432', 23467, '2017-07-28', '2017-07-31', '');
 
 -- --------------------------------------------------------
 
@@ -210,13 +212,15 @@ ALTER TABLE `clearance_level_key`
 -- Indexes for table `equipment checked out`
 --
 ALTER TABLE `equipment checked out`
-  ADD PRIMARY KEY (`barcode of item`);
+  ADD PRIMARY KEY (`checkout_id`),
+  ADD UNIQUE KEY `Unique` (`barcode of item`) USING BTREE;
 
 --
 -- Indexes for table `equipment_reservation`
 --
 ALTER TABLE `equipment_reservation`
-  ADD PRIMARY KEY (`barcode of item`);
+  ADD PRIMARY KEY (`reservation_id`),
+  ADD UNIQUE KEY `Unique` (`barcode of item`) USING BTREE;
 
 --
 -- Indexes for table `products`
@@ -239,6 +243,16 @@ ALTER TABLE `students`
 --
 ALTER TABLE `clearance_level_key`
   MODIFY `level id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `equipment checked out`
+--
+ALTER TABLE `equipment checked out`
+  MODIFY `checkout_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `equipment_reservation`
+--
+ALTER TABLE `equipment_reservation`
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 DELIMITER $$
 --
 -- Events

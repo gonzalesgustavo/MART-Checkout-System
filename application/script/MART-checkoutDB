@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Aug 29, 2017 at 10:56 PM
+-- Generation Time: Aug 29, 2017 at 11:02 PM
 -- Server version: 5.6.33
 -- PHP Version: 7.0.12
 
@@ -20,6 +20,7 @@ DELIMITER $$
 --
 -- Procedures
 --
+DROP PROCEDURE IF EXISTS `reservations`$$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `reservations` ()  READS SQL DATA
 SELECT `equipment_reservation`.*, `students`.`name`, `students`.`email`, `students`.`phone` FROM `equipment_reservation` JOIN  `students` ON `equipment_reservation`.`student id` = `students`.`student id`
 WHERE `equipment_reservation`.`date needed` = CURRENT_DATE$$
@@ -32,6 +33,7 @@ DELIMITER ;
 -- Table structure for table `approval needed`
 --
 
+DROP TABLE IF EXISTS `approval needed`;
 CREATE TABLE `approval needed` (
   `barcode of item` varchar(255) NOT NULL,
   `student id` int(11) NOT NULL,
@@ -47,6 +49,7 @@ CREATE TABLE `approval needed` (
 -- Table structure for table `clearance_level_key`
 --
 
+DROP TABLE IF EXISTS `clearance_level_key`;
 CREATE TABLE `clearance_level_key` (
   `level id` int(11) NOT NULL,
   `level` varchar(255) NOT NULL,
@@ -84,6 +87,7 @@ INSERT INTO `clearance_level_key` (`level id`, `level`, `barcode`, `description`
 -- Table structure for table `equipment checked out`
 --
 
+DROP TABLE IF EXISTS `equipment checked out`;
 CREATE TABLE `equipment checked out` (
   `checkout_id` int(11) NOT NULL,
   `barcode of item` varchar(255) NOT NULL,
@@ -107,6 +111,7 @@ INSERT INTO `equipment checked out` (`checkout_id`, `barcode of item`, `student 
 -- Table structure for table `equipment_reservation`
 --
 
+DROP TABLE IF EXISTS `equipment_reservation`;
 CREATE TABLE `equipment_reservation` (
   `reservation_id` int(11) NOT NULL,
   `barcode of item` varchar(255) NOT NULL,
@@ -132,6 +137,7 @@ INSERT INTO `equipment_reservation` (`reservation_id`, `barcode of item`, `stude
 -- Table structure for table `products`
 --
 
+DROP TABLE IF EXISTS `products`;
 CREATE TABLE `products` (
   `barcode` varchar(255) NOT NULL,
   `item name` varchar(500) NOT NULL,
@@ -161,6 +167,7 @@ INSERT INTO `products` (`barcode`, `item name`, `item description`, `clearance l
 -- Table structure for table `students`
 --
 
+DROP TABLE IF EXISTS `students`;
 CREATE TABLE `students` (
   `student id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -186,6 +193,7 @@ INSERT INTO `students` (`student id`, `name`, `email`, `phone`, `clearance level
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `user barcode` int(11) NOT NULL,
   `name` int(11) NOT NULL,
@@ -257,11 +265,14 @@ DELIMITER $$
 --
 -- Events
 --
+DROP EVENT `reservations`$$
 CREATE DEFINER=`root`@`localhost` EVENT `reservations` ON SCHEDULE EVERY 1 DAY STARTS '2017-07-12 08:00:00' ON COMPLETION PRESERVE ENABLE DO CALL reservations()$$
 
+DROP EVENT `release`$$
 CREATE DEFINER=`root`@`localhost` EVENT `release` ON SCHEDULE EVERY 1 DAY STARTS '2017-06-26 16:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'release products that are reserved and are not picked up by 4' DO UPDATE `equipment reservation`
 SET `status of product` = 1$$
 
+DROP EVENT `yearly`$$
 CREATE DEFINER=`root`@`localhost` EVENT `yearly` ON SCHEDULE EVERY 1 YEAR STARTS '2017-06-30 08:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'yearly report of all check outs' DO SELECT * from `equipment checked out`$$
 
 DELIMITER ;

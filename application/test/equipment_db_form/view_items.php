@@ -1,13 +1,15 @@
 <?php
 
-//Database Information
-$host = 'localhost';
-$username = 'root';
-$password = 'root';
-$db_name = 'mart_checkout';
-$tbl_name = 'products';
+////Database Information
+//$host = 'localhost';
+//$username = 'root';
+//$password = 'root';
+//$db_name = 'mart_checkout';
+//$tbl_name = 'products';
+//
+//$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+include 'dbconfig.php';
 
 //Tests the connection to the database
 if (mysqli_connect_errno()) {
@@ -16,7 +18,7 @@ if (mysqli_connect_errno()) {
 } else {
     echo "Connected to " . $db_name . "<br>";
 
-    $query = "SELECT * FROM `products`";
+    $query = "SELECT * FROM `$tbl_name`";
 
     if(mysqli_query($link, $query)) {
 

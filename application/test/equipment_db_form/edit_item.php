@@ -4,14 +4,16 @@
  * Shane Barton
  */
 
-//Database Information
-$host = 'localhost';
-$username = 'root';
-$password = 'root';
-$db_name = 'mart_checkout';
-$tbl_name = 'products';
+////Database Information
+//$host = 'localhost';
+//$username = 'root';
+//$password = 'root';
+//$db_name = 'mart_checkout';
+//$tbl_name = 'products';
+//
+//$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+include 'dbconfig.php';
 
 //GETS the sku from the last page
 $item_sku = $_POST['sku'];
@@ -42,6 +44,7 @@ function getItemInfo($raw_result) {
     $item_notes = $results['notes'];
     $item_APF = $results['account purchased from'];
     $item_status = $results['status of product'];
+
 }
 
 //Tests the connection to the database
@@ -67,7 +70,6 @@ if (mysqli_connect_errno()) {
 
     //close the link to the database
     mysqli_close($link);
-
 }
 
 ?>

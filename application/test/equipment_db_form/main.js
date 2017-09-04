@@ -5,11 +5,36 @@ $(document).ready(function() {
     $("#btnUpdate").click(editConfirm);
     $("#btnDelete").click(deleteConfirm);
 
+    // $('#addItemForm').on('keyup keypress', function (event) {
+    //     var keyCode = event.keyCode || e.which;
+    //     if (keyCode == 13) {
+    //         event.preventDefault();
+    //         return false;
+    //     }
+    // });
+
     populateList();
 
     setShowElement("#editItemDiv", false);
     setShowAllAdd(false);
     setShowList(false);
+
+    $('#scanSubmitBtn').click('submit', function(event) {
+        var val = $('#scanSKU').val();
+        console.log("val: " + val);
+
+        $.ajax({
+            url: "edit_item.php",
+            type: "POST",
+            dataType: "text",
+            data: {sku: val},
+            success: (function (data) {
+                // console.log("data: " + data);
+                setShowElement("#editItemDiv", true);
+                $('#editItemDiv').html(data);
+            })
+        });
+    })
 
     $('#select').on('change', function(event) {
         var val = $(this).val();
@@ -21,11 +46,10 @@ $(document).ready(function() {
             dataType: "text",
             data: {sku: val},
             success: (function (data) {
-                console.log("data: " + data);
+                //console.log("data: " + data);
                 setShowElement("#editItemDiv", true);
                 $('#editItemDiv').html(data)
             })
-
         });
 
     });
@@ -36,7 +60,7 @@ $(document).ready(function() {
 
 function addItem() {
     console.log("Add Item Mode...");
-    // $.post('add_item.php', function (data) {
+    // $.post('add_student.php', function (data) {
     //     itemNumberDiv.innerHTML = data;
     // });
     setShowElement("#addItemDiv", true);
@@ -48,7 +72,7 @@ function populateList() {
 
     $(document).ready(function () {
         $.post('getEquip.php', function(data) {
-            result = data;
+            var result = data;
             handleJSON(data);
             //infoDiv.innerHTML = result;
         })
@@ -60,8 +84,27 @@ function viewList() {
     setShowElement("#addItemDiv", false);
     setShowList(true);
 
+}
 
+function scanSubmit() {
 
+    //alert("Submitted");
+    // console.log("Submitted");
+
+    var a = document.forms["scanItemSearchForm"]["sku"].value;
+
+    console.log("a= " + a);
+
+    //checks for blank fields
+    if (a == null || a == "") {
+        alert("Please fill out required fields");
+        return false;
+    } else {
+
+        var str = $("#scanItemSearchForm").serialize();
+        console.log(str);
+
+    }
 }
 
 function handleJSON(json) {
@@ -75,7 +118,7 @@ function handleJSON(json) {
         console.log("No results");
         console.log("Length: " + pJSON.length)
     } else {
-        objLength = pJSON.length;
+        var objLength = pJSON.length;
 
         //console log for testing
         // console.log(json);
@@ -106,7 +149,7 @@ function populateEquipDropDown(equipments) {
     // defOption.textContent = "Select an Item...";
     // select.appendChild(defOption);
 
-    dLength = Object.keys(equipments).length;
+    var dLength = Object.keys(equipments).length;
     var equip;
 
     for ( var i = 0; i < dLength; i++) {
@@ -121,7 +164,7 @@ function populateEquipDropDown(equipments) {
 }
 
 function addSubmitForm() {
-    //alert("called");
+    // alert("called");
 
     //gets values for required fields
     var a = document.forms["addItemForm"]["sku"].value;
@@ -145,14 +188,14 @@ function addSubmitForm() {
             success: (function () {
                 alert("Item ADDED to database.");
                 document.getElementById("addItemForm").reset();
-                addItemToDropdown(a, b);  
+                addItemToDropdown(a, b);
             })
         });
     }
 }
 
 function addItemToDropdown(a,b) {
-    //variable a is product sku 
+    //variable a is product sku
     //variable b is name of product
     var el = document.createElement("option");
     el.textContent = a + " (" + b + ")";
@@ -169,7 +212,7 @@ function editConfirm() {
     } else {
         //load nothing
     }
-    
+
 }
 
 function deleteConfirm() {

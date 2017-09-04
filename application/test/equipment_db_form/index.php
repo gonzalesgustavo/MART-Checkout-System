@@ -20,7 +20,14 @@
     <br>
 
     <div id="selectItemDiv">
-        <h3>Select Item</h3>
+
+        <h3>Search by SKU</h3>
+        <form id="scanItemSearchForm" action="" onsubmit="scanSubmit(); return false;">
+            SKU: <input id="scanSKU" type="text" name="sku"/>
+            <input ID="scanSubmitBtn" type="submit" name="submit">
+        </form>
+
+        <h3>Select Item From List</h3>
         <select id="select" name="select">
 
         </select>
@@ -30,7 +37,8 @@
 
     <div id="addItemDiv">
         <h3>Add Item</h3>
-        <form id="addItemForm" action="" onsubmit="addSubmitForm(); return false;">
+
+        <form id="addItemForm" onkeypress="return event.keyCode != 13;" action="" onsubmit="addSubmitForm(); return false;">
             SKU: <input type="text" name="sku"/> *Required<br>
             Item Name: <input type="text" name="iName"/> *Required<br>
             Item Description: <input type="text" name="iDescription"/><br>
@@ -39,8 +47,8 @@
             Account Purchased From: <input type="text" name="accPurchFrom"><br>
             Status of Product:
             <select name="iStatus">
-                <option value="out of commission">out of commission</option>
-                <option value="available for checkout">available for checkout</option>
+                <option value="0">0 (out of commission)</option>
+                <option value="1">1 (available for checkout)</option>
             </select><br>
             <input name="addSkuSubmit" type="submit" value="Add Item">
         </form>

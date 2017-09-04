@@ -13,14 +13,16 @@
  * Shane Barton
  */
 
-//Database Information
-$host = 'localhost';
-$username = 'root';
-$password = 'root';
-$db_name = 'mart_checkout';
-$tbl_name = 'products';
+////Database Information
+//$host = 'localhost';
+//$username = 'root';
+//$password = 'root';
+//$db_name = 'mart_checkout';
+//$tbl_name = 'products';
+//
+//$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+include 'dbconfig.php';
 
 //gets the inputs from the last page
 $item_sku = $_POST['eSku'];

@@ -46,9 +46,12 @@
             Notes: <input type="text" name="notes"/><br>
             Account Purchased From: <input type="text" name="accPurchFrom"><br>
             Status of Product:
-            <select name="iStatus">
-                <option value="0">0 (out of commission)</option>
-                <option value="1">1 (available for checkout)</option>
+             <select name="iStatus">
+                <option value="out of commission">out of commission</option>
+                <option value="available for checkout">available for checkout</option>
+                <option value="reserved">reserved</option>
+                <option value="available after class">available after class</option>
+                <option value="out for repair">out for repair</option>
             </select><br>
             <input name="addSkuSubmit" type="submit" value="Add Item">
         </form>

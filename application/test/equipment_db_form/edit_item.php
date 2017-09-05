@@ -85,15 +85,39 @@ if (mysqli_connect_errno()) {
     Status of Product: <? echo "(" . $item_status . ")"; ?>
 <!--    <input type="text" name="iStatus" value="--><?// echo $item_status ?><!--" ><br>-->
     <select name="eStatus">
-        <? if ($item_status == 1) {
-                echo $status_1;
+              <? if ($item_status == "available for checkout") {
                 echo $status_0;
-            } else {
+                echo $status_2;
+                echo $status_3;
+                echo $status_4;
+
+            } else if($item_status == "out of commission") {
+                echo $status_1;
+                echo $status_2;
+                echo $status_3;
+                echo $status_4;
+
+            }else if($item_status == "reserved") {
                 echo $status_0;
                 echo $status_1;
+                echo $status_3;
+                echo $status_4;
+
+            }else if($item_status == "available after class") {
+                echo $status_0;
+                echo $status_1;
+                echo $status_2;
+                echo $status_4;
+
+            }else if($item_status == "out for repair") {
+                echo $status_0;
+                echo $status_1;
+                echo $status_2;
+                echo $status_3;
+
             }
 
-                ?>
+        ?>
 
     </select>
     <br><br>

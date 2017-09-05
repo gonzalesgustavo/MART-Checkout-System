@@ -21,8 +21,11 @@ $item_sku = $_POST['sku'];
 //Initializes variables to be used in forms
 $item_name = $item_desc = $item_clrLvl = $item_notes = $item_APF = $item_status = "";
 
-$status_0 = '<option value="0">0 (out of commission)</option>';
-$status_1 = '<option value="1">1 (available for checkout)</option>';
+$status_0 = '<option value="out of commission">out of commission</option>';
+$status_1 = '<option value="available for checkout">available for checkout</option>';
+$status_2 = '<option value="reserved">reserved</option>';
+$status_3 = '<option value="available after class">available after class</option>';
+$status_4 = '<option value="out for repair">out for repair</option>';
 
 /*
  * Searches the database using the entered SKU.

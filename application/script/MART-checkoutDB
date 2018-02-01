@@ -265,14 +265,11 @@ DELIMITER $$
 --
 -- Events
 --
-DROP EVENT `reservations`$$
-CREATE DEFINER=`root`@`localhost` EVENT `reservations` ON SCHEDULE EVERY 1 DAY STARTS '2017-07-12 08:00:00' ON COMPLETION PRESERVE ENABLE DO CALL reservations()$$
+CREATE DEFINER=`root`@`localhost` EVENT `reservations` ON SCHEDULE EVERY 1 DAY STARTS '2018-02-05 08:00:00' ON COMPLETION PRESERVE ENABLE DO CALL reservations()$$
 
-DROP EVENT `release`$$
-CREATE DEFINER=`root`@`localhost` EVENT `release` ON SCHEDULE EVERY 1 DAY STARTS '2017-06-26 16:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'release products that are reserved and are not picked up by 4' DO UPDATE `equipment reservation`
+CREATE DEFINER=`root`@`localhost` EVENT `release` ON SCHEDULE EVERY 1 DAY STARTS '2018-02-05 16:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'release products that are reserved and are not picked up by 4' DO UPDATE `equipment reservation`
 SET `status of product` = 1$$
 
-DROP EVENT `yearly`$$
-CREATE DEFINER=`root`@`localhost` EVENT `yearly` ON SCHEDULE EVERY 1 YEAR STARTS '2017-06-30 08:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'yearly report of all check outs' DO SELECT * from `equipment checked out`$$
+CREATE DEFINER=`root`@`localhost` EVENT `yearly` ON SCHEDULE EVERY 1 YEAR STARTS '2018-02-05 08:00:00' ON COMPLETION PRESERVE ENABLE COMMENT 'yearly report of all check outs' DO SELECT * from `equipment checked out`$$
 
 DELIMITER ;

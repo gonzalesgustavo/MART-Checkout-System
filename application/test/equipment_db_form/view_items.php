@@ -9,7 +9,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include 'dbconfig.php';
+include '../dbconfig.php';
 
 //Tests the connection to the database
 if (mysqli_connect_errno()) {

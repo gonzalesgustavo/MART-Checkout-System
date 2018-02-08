@@ -5,13 +5,15 @@
  */
 
 //Database Information
-$host = 'localhost';
-$username = 'root';
-$password = 'root';
-$db_name = 'test_checkout';
-$tbl_name = 'students';
+//$host = 'localhost';
+//$username = 'root';
+//$password = 'root';
+//$db_name = 'test_checkout';
+//$tbl_name = 'students';
+//
+//$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+include '../dbconfig.php';
 
 //GETS the sku from the last page
 $student_ID = $_GET['sID'];

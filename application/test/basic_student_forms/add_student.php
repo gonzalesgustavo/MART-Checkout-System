@@ -11,13 +11,15 @@ $isStudentExists = false;
 
 
 //Database Information
-$host = 'localhost';
-$username = 'root';
-$password = 'root';
-$db_name = 'test_checkout';
-$tbl_name = 'students';
+//$host = 'localhost';
+//$username = 'root';
+//$password = 'root';
+//$db_name = 'test_checkout';
+//$tbl_name = 'students';
+//
+//$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+include '../dbconfig.php';
 
 function checkForStudent($raw_result) {
 

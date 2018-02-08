@@ -13,7 +13,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include 'dbconfig.php';
+include '../dbconfig.php';
 
 //GETS the sku from the last page
 $item_sku = $_POST['sku'];

@@ -5,7 +5,7 @@
  * Date: 7/08/2017
  * Time: 11:33 AM
  */
-include 'dbconfig.php';
+include '../dbconfig.php';
 //sessions used to save the data
 session_start();
 $equipment = "SELECT * FROM `products`";

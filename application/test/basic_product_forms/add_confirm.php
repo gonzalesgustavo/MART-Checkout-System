@@ -5,13 +5,14 @@
  */
 
 //Database Information
-$host = 'localhost';
-$username = 'root';
-$password = 'root';
-$db_name = 'test_checkout';
-$tbl_name = 'products';
-
-$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+//$host = 'localhost';
+//$username = 'root';
+//$password = 'root';
+//$db_name = 'test_checkout';
+//$tbl_name = 'products';
+//
+//$link = mysqli_connect("$host", "$username", "$password", "$db_name");
+include '../dbconfig.php';
 
 //gets the inputs from the last page
 $item_sku = $_POST['sku'];

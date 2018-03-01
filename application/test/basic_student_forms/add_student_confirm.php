@@ -16,6 +16,8 @@
 
 include '../dbconfig.php';
 
+$tbl_name = 'students'; //table name
+
 //gets the inputs from the last page
 $student_id = $_POST['sID'];
 $student_name = $_POST['sName'];

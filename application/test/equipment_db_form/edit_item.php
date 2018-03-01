@@ -15,6 +15,8 @@
 
 include '../dbconfig.php';
 
+$tbl_name = "products"; //table name
+
 //GETS the sku from the last page
 $item_sku = $_POST['sku'];
 

@@ -23,6 +23,8 @@
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
 include '../dbconfig.php';
+    
+$tbl_name = "products"; //table name
 
 //gets the inputs from the last page
 $item_sku = $_POST['eSku'];

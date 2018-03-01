@@ -15,6 +15,8 @@
 
 include '../dbconfig.php';
 
+$tbl_name = 'students'; //table name
+
 //GETS the sku from the last page
 $student_ID = $_GET['sID'];
 

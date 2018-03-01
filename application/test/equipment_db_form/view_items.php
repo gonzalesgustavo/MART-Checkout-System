@@ -11,6 +11,8 @@
 
 include '../dbconfig.php';
 
+$tbl_name = "products"; //table name
+
 //Tests the connection to the database
 if (mysqli_connect_errno()) {
     echo "Connection failed: ".mysqli_connect_error();

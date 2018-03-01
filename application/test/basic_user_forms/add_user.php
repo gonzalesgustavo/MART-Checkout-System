@@ -20,6 +20,7 @@ $isUserExists = false;
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
 include '../dbconfig.php';
+$tbl_name = 'users';
 
 function checkForUser($raw_result) {
 

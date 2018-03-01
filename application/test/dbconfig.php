@@ -11,7 +11,7 @@ $host = "localhost"; //host name
 $username = "root"; //mysql username
 $password = "root"; //mysql password
 $db_name = "mart_checkout"; //database name
-$tbl_name = "equipment_reservation"; //table name
+//$tbl_name = "equipment_reservation"; //table name
 
 //connect to server and access the database
 $link = mysqli_connect("$host", "$username", "$password", "$db_name");

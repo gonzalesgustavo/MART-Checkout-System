@@ -21,6 +21,8 @@ $isStudentExists = false;
 
 include '../dbconfig.php';
 
+$tbl_name = 'students'; //table name
+
 function checkForStudent($raw_result) {
 
     global $student_ID, $isStudentExists;

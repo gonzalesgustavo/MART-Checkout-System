@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Mar 20, 2018 at 09:02 PM
+-- Generation Time: Mar 22, 2018 at 11:21 PM
 -- Server version: 5.6.33
 -- PHP Version: 7.0.12
 
@@ -123,7 +123,7 @@ CREATE TABLE `students` (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
-  `user barcode` int(11) NOT NULL,
+  `user id` varchar(255) NOT NULL,
   `name` varchar(50) NOT NULL,
   `admin privileges` enum('Manager','Assistant','Student') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

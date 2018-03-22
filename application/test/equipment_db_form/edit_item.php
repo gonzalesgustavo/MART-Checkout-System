@@ -13,7 +13,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 
 $tbl_name = "products"; //table name
 

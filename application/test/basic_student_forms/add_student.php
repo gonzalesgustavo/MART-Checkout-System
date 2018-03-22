@@ -19,9 +19,12 @@ $isStudentExists = false;
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 
 $tbl_name = 'students'; //table name
+
+$status_0 = '<option value="active">active</option>';
+$status_1 = '<option value="inactive">inactive</option>';
 
 function checkForStudent($raw_result) {
 
@@ -80,9 +83,16 @@ if (mysqli_connect_errno()) {
     Name: <input type="text" name="sName" value="" /><br>
     Email: <input type="text" name="sEmail" value="" /><br>
     Phone Number: <input type="number" name="sPhone" value="" /><br>
-    Eligible: <input type="number" name="sEligible" value="" /><br>
+    Eligible: <select name="sEligible">
+        <option value="eligible">eligible</option>
+        <option value="ineligible">ineligible</option>
+    </select>
     Clearance Level: <input type="number" name="sClearance" value="" ><br>
-    Inactive/Active: <input type="number" name="sActive" value="" ><br>
+    Inactive/Active: <select name="sActive">
+        <option value="active">active</option>
+        <option value="inactive">inactive</option>
+    </select>
+    <br>
     Amount Owed: <input type="text" name="sAmount" value="" ><br><br>
     <input type="submit" value="Add Student"/>
 </form>

@@ -13,7 +13,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 
 //GETS the sku from the last page
 $user_id = $_GET['id'];
@@ -23,6 +23,10 @@ $user_name = $user_privileges = "";
 
 //bool for user found
 $isUserFound = false;
+
+$privilege_0 = '<option value="Manager">Manager</option>';
+$privilege_1 = '<option value="Assistant">Assistant</option>';
+$privilege_2 = '<option value="Student">Student</option>';
 
 /*
  * Searches the database using the entered SKU.
@@ -91,7 +95,27 @@ if (mysqli_connect_errno()) {
 <form action="edit_confirm.php" method="post">
     User ID: <input type="text" name="uID" value="<? echo $user_id ?>" readonly/><br>
     Name: <input type="text" name="uName" value="<? echo $user_name ?>" /><br>
-    Admin Privileges: <input type="text" name="uPriv" value="<? echo $user_privileges ?>" /><br>
+    Admin Privileges: <? echo "(" . $user_privileges . ")"; ?>
+<!--    <input type="text" name="iStatus" value="--><?// echo $item_status ?><!--" ><br>-->
+    <select name="uPriv">
+                  <? if ($user_privileges == "Manager") {
+                    echo $privilege_0;
+                    echo $privilege_1;
+                    echo $privilege_2;
+
+                } else if($user_privileges == "Assistant") {
+                    echo $privilege_1;
+                    echo $privilege_0;
+                    echo $privilege_2;
+
+                } else if($user_privileges == "Student") {
+                    echo $privilege_2;
+                    echo $privilege_0;
+                    echo $privilege_1;
+                }
+        ?>
+    </select>
+    <br>
     <input type="submit" name="save" value="Save Changes"/>
     <br><br>
     <input type="submit" name="delete" value="Delete User"/>

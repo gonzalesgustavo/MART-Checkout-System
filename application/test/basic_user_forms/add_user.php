@@ -19,7 +19,7 @@ $isUserExists = false;
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 $tbl_name = 'users';
 
 function checkForUser($raw_result) {
@@ -63,14 +63,19 @@ mysqli_close($link);
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Add Item Mode</title>
+    <title>Add User Mode</title>
 </head>
 <body>
 <h1>ADD Item</h1>
 <form action="add_user_confirm.php" method="post">
     ID: <input type="number" name="uID" value="<? echo $user_id ?>" readonly/><br>
     Name: <input type="text" name="uName"/><br>
-    Admin Privileges: <input type="text" name="uPriv"/><br>
+    Admin Privileges: <select name="uPriv">
+        <option value="Manager">Manager</option>
+        <option value="Assistant">Assistant</option>
+        <option value="Student">Student</option>
+    </select>
+    <br><br>
     <input type="submit" value="Add User"/>
 </form>
 

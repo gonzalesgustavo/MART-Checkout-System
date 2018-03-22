@@ -13,7 +13,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 
 //gets the inputs from the last page
 $user_id = $_POST['uID'];

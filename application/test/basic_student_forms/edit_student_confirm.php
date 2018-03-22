@@ -13,7 +13,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 
 $tbl_name = 'students'; //table name
 
@@ -41,7 +41,7 @@ if (mysqli_connect_errno()) {
     if (isset($_POST['save'])) {
 
         //updates the product
-        $query = "UPDATE `$tbl_name` SET `name` = '$student_name', `email` = '$student_email', `phone` = '$student_phone', `eligible` = '$student_eligible', `clearance level` = '$student_clearance', `inactive/active` = '$student_is_active', `amount owed` = '$student_amt_owed' WHERE `student id` = '$student_id'";
+        $query = "UPDATE `$tbl_name` SET `name` = '$student_name', `email` = '$student_email', `phone` = '$student_phone', `eligible` = '$student_eligible', `clearance level` = '$student_clearance', `active` = '$student_is_active', `amount owed` = '$student_amt_owed' WHERE `student id` = '$student_id'";
 
         if (mysqli_query($link, $query)) {
             echo "Student edited!";

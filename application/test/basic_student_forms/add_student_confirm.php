@@ -14,7 +14,7 @@
 //
 //$link = mysqli_connect("$host", "$username", "$password", "$db_name");
 
-include '../dbconfig.php';
+include '../../config/dbconfig.php';
 
 $tbl_name = 'students'; //table name
 
@@ -36,7 +36,7 @@ if (mysqli_connect_errno()) {
     echo "Connected to " . $db_name . "<br>";
 
     //adds the item to the databse using the input fields
-    $query = "INSERT INTO `$tbl_name`(`student id`, `name`, `email`, `phone`, `eligible`, `clearance level`, `inactive/active`, `amount owed`) VALUES ('$student_id', '$student_name', '$student_email', '$student_phone', '$student_eligible', '$student_clearance', '$student_is_active', '$student_amt_owed')";
+    $query = "INSERT INTO `$tbl_name`(`student id`, `name`, `email`, `phone`, `eligible`, `clearance level`, `active`, `amount owed`) VALUES ('$student_id', '$student_name', '$student_email', '$student_phone', '$student_eligible', '$student_clearance', '$student_is_active', '$student_amt_owed')";
 
     if(mysqli_query($link, $query)) {
         echo "New Student added!";

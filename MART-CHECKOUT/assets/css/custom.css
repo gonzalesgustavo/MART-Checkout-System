@@ -1,0 +1,49 @@
+body{padding-bottom: 100px;}
+
+/*  modified bootstrap */
+
+.bg-primary {
+  background-color: #8B008B !important;
+}
+
+.btn-primary {
+  background-color: #8B008B !important;
+  color: #FFF !important;
+  border: none !important;
+}
+
+.btn-primary:hover, .btn-primary:focus{
+    border-color: #8B008B !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(139,0,139, 0.25) !important;
+}
+
+.btn-secondary:focus,.btn-secondary:hover, .btn-secondary:active{
+    outline: 0 !important;
+	border: none !important;
+}
+
+.navbar-toggler{
+	outline: #000 !important;
+}
+
+.table a {
+  color: #8B008B !important;
+}
+
+
+.form-control:focus {
+  color: #495057 !important;
+  background-color: #fff !important;
+  border-color: #8B008B !important;
+  outline: 0 !important;
+  box-shadow: 0 0 0 0.2rem rgba(139,0,139, 0.25) !important;
+}
+
+.form-control .btn:hover, .form-control .btn:focus{
+    color: #495057 !important;
+    background-color: #fff !important;
+    border-color: #8B008B !important;
+    outline: 0 !important;
+    box-shadow: 0 0 0 0.2rem rgba(139,0,139, 0.25) !important;
+}

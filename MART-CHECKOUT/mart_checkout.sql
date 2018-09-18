@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: May 08, 2018 at 04:45 AM
--- Server version: 5.6.38
--- PHP Version: 7.2.1
+-- Host: localhost:3306
+-- Generation Time: Sep 18, 2018 at 07:52 PM
+-- Server version: 5.6.34-log
+-- PHP Version: 7.1.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -28,6 +30,7 @@ USE `mart_checkout`;
 -- Table structure for table `approvals`
 --
 
+DROP TABLE IF EXISTS `approvals`;
 CREATE TABLE `approvals` (
   `barcode` varchar(255) NOT NULL,
   `banner_id` varchar(11) NOT NULL,
@@ -43,6 +46,7 @@ CREATE TABLE `approvals` (
 -- Table structure for table `checked_out`
 --
 
+DROP TABLE IF EXISTS `checked_out`;
 CREATE TABLE `checked_out` (
   `checkout_id` int(11) NOT NULL,
   `barcode` varchar(255) NOT NULL,
@@ -58,6 +62,7 @@ CREATE TABLE `checked_out` (
 -- Table structure for table `clearance`
 --
 
+DROP TABLE IF EXISTS `clearance`;
 CREATE TABLE `clearance` (
   `id` int(11) NOT NULL,
   `level` varchar(255) NOT NULL,
@@ -72,6 +77,7 @@ CREATE TABLE `clearance` (
 -- Table structure for table `equipment`
 --
 
+DROP TABLE IF EXISTS `equipment`;
 CREATE TABLE `equipment` (
   `barcode` varchar(255) NOT NULL,
   `name` varchar(500) NOT NULL,
@@ -88,16 +94,24 @@ CREATE TABLE `equipment` (
 -- Table structure for table `reservations`
 --
 
+DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE `reservations` (
   `reservation_id` int(11) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `student_id` varchar(11) NOT NULL COMMENT 'barcode from id',
-  `date_pickup` varchar(10) NOT NULL,
-  `date_due` varchar(10) NOT NULL,
+  `date_pickup` varchar(255) NOT NULL,
+  `date_due` varchar(255) NOT NULL,
   `notes` varchar(5000) NOT NULL,
   `user_id` varchar(11) NOT NULL,
   `date_time` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`reservation_id`, `barcode`, `student_id`, `date_pickup`, `date_due`, `notes`, `user_id`, `date_time`) VALUES
+(5, '1234', '1234', '05/09/2018 9:30 AM', '05/11/2018 4:00 PM', '', '1234', 'Tue, 08 May 18 03:25:26pm');
 
 -- --------------------------------------------------------
 
@@ -105,6 +119,7 @@ CREATE TABLE `reservations` (
 -- Table structure for table `students`
 --
 
+DROP TABLE IF EXISTS `students`;
 CREATE TABLE `students` (
   `banner_id` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -122,18 +137,23 @@ CREATE TABLE `students` (
 -- Table structure for table `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `banner_id` varchar(255) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `role` enum('Manager','Assistant','Student Employee') NOT NULL
+  `role` enum('Manager','Assistant','Student Employee') NOT NULL,
+  `password` varchar(250) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`banner_id`, `name`, `role`) VALUES
-('1234', 'Admin', 'Manager');
+INSERT INTO `users` (`banner_id`, `name`, `role`, `password`) VALUES
+('1010', 'test1', 'Manager', '$2y$10$0g0JPR11vLB0iaY.dDpz.e2gv8JVyw8Sv1PA6nCqJxx5qQjsJxeZO'),
+('1234', 'Manager', 'Manager', NULL),
+('2020', 'test2', 'Student Employee', NULL),
+('56789', 'assistant', 'Assistant', NULL);
 
 --
 -- Indexes for dumped tables
@@ -193,18 +213,16 @@ ALTER TABLE `users`
 --
 ALTER TABLE `checked_out`
   MODIFY `checkout_id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `clearance`
 --
 ALTER TABLE `clearance`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
 --
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
